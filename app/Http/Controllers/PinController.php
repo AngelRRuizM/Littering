@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Pin;
+users.pin.index;
 
 class PinController extends Controller
 {
@@ -13,7 +15,11 @@ class PinController extends Controller
      */
     public function index()
     {
-        //
+        $pins = Pin::all();
+        $residues = Residue::all()->sortBy('name');
+        $locations = Location::all()->sortBy('name');
+
+        return view('users.pins.index', compact('pins', 'residues', 'locations'));
     }
 
     /**
@@ -23,7 +29,7 @@ class PinController extends Controller
      */
     public function create()
     {
-        //
+     //
     }
 
     /**
@@ -34,7 +40,24 @@ class PinController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'residue_id' => 'required|numeric',
+            'location_id' => 'required|numeric'
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()
+                ->withInput($request)
+                ->withErrors($validator);
+        }
+        
+        $pin = new Pin;
+        $pin->residue_id = $request->residue_id;
+        $pin->location_id = $request->location_id;
+        $pin->save();
+
+        session()->flash('message', 'El pin nuevo se ha creado con exito.');
+        return redirect('/users/pins');
     }
 
     /**
@@ -43,7 +66,7 @@ class PinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Pin $pin)
     {
         //
     }
@@ -54,9 +77,17 @@ class PinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Pin $pin)
     {
-        //
+        if($pin == null){
+            $errors = ['No se ha encontrado el id especificado.'];
+            return redirect()->back()->withErrors($errors);
+        }
+
+        $residues = Residue::all()->sortBy('name');
+        $locations = Location::all()->sortBy('name');
+
+        return view('users.pin.show', compact('pin', 'residues', 'locations'));
     }
 
     /**
@@ -66,9 +97,31 @@ class PinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Pin $pin)
     {
-        //
+        if($pin == null){
+            $errors = ['No se ha encontrado el id especificado.'];
+            return redirect()->back()->withErrors($errors);
+        }
+
+        $validator = Validator::make($request->all(), [
+             'residue_id' => 'required|numeric',
+            'location_id' => 'required|numeric'
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()
+                ->withInput($request)
+                ->withErrors($validator);
+        }
+        
+        $pin->residue_id = $request->residue_id;
+        $pin->location_id = $request->location_id;
+        $pin->save();
+
+
+        session()->flash('message', 'El pin nuevo se ha creado con exito.');
+        return redirect('/users/pins');
     }
 
     /**
@@ -77,8 +130,14 @@ class PinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pin $pin)
     {
-        //
+        if($pin == null){
+            $errors = ['No se ha encontrado el id especificado.'];
+            return redirect()->back()->withErrors($errors);
+        }
+
+        $pin->delete();
+        return redirect('users.pins.index');
     }
 }
