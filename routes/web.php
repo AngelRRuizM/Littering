@@ -11,6 +11,31 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@index')->name('home');
+Route::get('/map', 'HomeController@show');
+
+Auth::routes();
+
+Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'User', 'middleware' => 'auth'], function () {
+    
+    //User
+    Route::get('/', 'UserController@show')->name('users.show');
+    Route::get('/editar', 'UserController@edit')->name('users.edit');
+    Route::put('/', 'UserController@update')->name('users.update');
+    Route::delete('/', 'UserController@destroy')->name('users.destroy');
+    
+    //Pins
+    Route::get('pines', 'PinController@index')->name('pins');
+    Route::get('pines/{pin}/editar', 'PinController@edit')->name('pins');
+    Route::post('pines', 'PinController@store')->name('pins.store');
+    Route::put('pines/{pin}', 'PinController@update')->name('pins.update');
+    Route::delete('pines/{pin}', 'PinController@destroy')->name('pins.destroy');
+
+    //Locations
+    Route::get('localizaciones', 'LocationController@index')->name('locations');
+    Route::get('localizaciones/crear', 'LocationController@create')->name('locations.create');
+    Route::get('localizaciones/{location}/editar', 'LocationController@edit')->name('locations.edit');
+    Route::post('localizaciones', 'LocationController@store')->name('locations.store');
+    Route::put('localizaciones/{location}', 'LocationController@update')->name('locations.update');
+    Route::delete('localizaciones/{location}', 'LocationController@destroy')->name('locations.destroy');
 });
