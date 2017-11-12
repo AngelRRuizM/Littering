@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Location;
 use App\User;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-class LocationsController extends Controller
+class LocationController extends Controller
 {
     /**
      * Lista las localizaciones
@@ -15,7 +16,7 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        $locations = Location::all();
+        $locations = Location::all()->sortBy('name');
         
         return view('users.locations.index', compact('locations'));
     }
@@ -44,26 +45,25 @@ class LocationsController extends Controller
             'lng' => 'required|numeric',
             'name' => 'required|max:50',
             'address' => 'required|max:80',
-            'user_id' => 'required|Integer',
         ]);
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
         if($validator->fails()){
-            return redirect()->back()
-                ->withInput($request)
-                ->withErrors($validator);
+            return redirect()->back()->withInput($request->all())->withErrors($validator);
         }
+
         //crea y guarda el nuevo dato
-        $location = new Location;
-        $lat = $request->lat;
-        $lng = $request->lng;
-        $name = $request->name;
-        $address = $request->address;
-        $user_id = $request->user_id;
-        $location->save();
+        $location = Location::create([
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'name' => $request->name,
+            'address' => $request->address,
+            'user_id' => auth()->user()->id,
+        ]);
 
         session()->flash('message', 'La nueva localización ha sido guardada correctamente.');
-        return redirect('/usuario/localizaciones');
+
+        return redirect( route('user.locations') );
     }
 
     /**
@@ -102,26 +102,22 @@ class LocationsController extends Controller
             'lng' => 'required|numeric',
             'name' => 'required|max:50',
             'address' => 'required|max:80',
-            'user_id' => 'required|Integer',
         ]);
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
         if($validator->fails()){
-            return redirect()->back()
-                ->withInput($request)
-                ->withErrors($validator);
+            return redirect()->back()->withInput($request)->withErrors($validator);
         }
         //guarda el nuevo dato
 
-        $lat = $request->lat;
-        $lng = $request->lng;
-        $name = $request->name;
-        $address = $request->address;
-        $user_id = $request->user_id;
+        $location->lat = $request->lat;
+        $location->lng = $request->lng;
+        $location->name = $request->name;
+        $location->address = $request->address;
         $location->save();
 
         session()->flash('message', 'La nueva localización ha sido guardada correctamente.');
-        return redirect('/usuario/localizaciones');
+        return redirect(route('user.locations'));
 
     }
 
@@ -139,6 +135,6 @@ class LocationsController extends Controller
         }
 
         $location->delete();
-        return redirect('usuario/localizaciones');
+        return redirect(route('user.locations'));
     }
 }

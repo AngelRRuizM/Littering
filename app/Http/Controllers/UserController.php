@@ -21,7 +21,7 @@ class UserController extends Controller
             $errors = ['No se ha encontrado el ususario especificado'];
             return redirect()->back()->withErrors($errors);
         }
-        return wiew('users.show');
+        return view('users.show');
     }
 
     /**
@@ -85,7 +85,7 @@ class UserController extends Controller
      * @param  User $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user){}
+    public function destroy(User $user)
     {
         if($user==null){
             $errors = ['No se ha encontrado el usuario especificado'];

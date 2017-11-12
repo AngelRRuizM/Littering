@@ -67,12 +67,12 @@ _________________________________________________________ -->
 
             <!-- *** NAVBAR END *** -->
 
+            @yield('heading')
+
         </header>
 
         <!-- *** LOGIN MODAL ***-->
-        
         @yield('content')
-        
 
         <!-- *** FOOTER ***-->
         @include('layouts.footer')

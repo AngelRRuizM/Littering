@@ -12,18 +12,19 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <form action="{{ URL::route('user.locations.store') }}" method="POST">
+                <form action="{{ URL::route('user.locations.update', ['location_id' => $location->id   ]) }}" method="POST">
                 {{ csrf_field() }}
+                {{ method_field('PUT') }}
                 <div class="form-group">
                     <label for="name">Nombre de la ubicación</label>
-                    <input type="text" class="form-control" id="name" name="name" required>
+                    <input type="text" class="form-control" id="name" name="name" value="{{$location->name}}" required>
                 </div>
                 <div class="form-group">
                     <label for="address">Dirección</label>
-                    <input type="text" class="form-control" id="address" name="address" required>
+                    <input type="text" class="form-control" id="address" name="address" value="{{$location->address}}" required>
                 </div>
-                <input type="hidden" class="form-control" id="lat" name="lat">
-                <input type="hidden" class="form-control" id="lng" name="lng">
+                <input type="hidden" class="form-control" id="lat" name="lat" value="{{$location->lat}}">
+                <input type="hidden" class="form-control" id="lng" name="lng" value="{{$location->lng}}">
                 <div class="text-center">
                     <button type="submit" class="btn btn-template-main" onclick="setCoords();"><i class="fa fa-user-md"></i>Agregar</button>
                     <script type="text/javascript">

@@ -16,13 +16,14 @@ Route::get('/map', 'HomeController@show');
 
 Auth::routes();
 
-Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'User', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'usuario', 'as' => 'user.', 'middleware' => 'auth'], function () {
     
     //User
-    Route::get('/', 'UserController@show')->name('users.show');
-    Route::get('/editar', 'UserController@edit')->name('users.edit');
-    Route::put('/', 'UserController@update')->name('users.update');
-    Route::delete('/', 'UserController@destroy')->name('users.destroy');
+    Route::get('/', 'UserController@show')->name('show');
+    Route::get('/editar', 'UserController@edit')->name('edit');
+    Route::put('/', 'UserController@update')->name('update');
+    Route::delete('/', 'UserController@destroy')->name('destroy');
+    
     
     //Pins
     Route::get('pines', 'PinController@index')->name('pins');
