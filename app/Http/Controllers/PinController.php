@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Pin;
-users.pin.index;
+use App\User;
+use App\Location;
+use App\Residue;
 
 class PinController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Lista los pines.
      *
      * @return \Illuminate\Http\Response
      */
@@ -23,7 +26,7 @@ class PinController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 
      *
      * @return \Illuminate\Http\Response
      */
@@ -57,7 +60,7 @@ class PinController extends Controller
         $pin->save();
 
         session()->flash('message', 'El pin nuevo se ha creado con exito.');
-        return redirect('/users/pins');
+        return redirect( route ('users.pins'));
     }
 
     /**
@@ -87,7 +90,7 @@ class PinController extends Controller
         $residues = Residue::all()->sortBy('name');
         $locations = Location::all()->sortBy('name');
 
-        return view('users.pin.show', compact('pin', 'residues', 'locations'));
+        return view('users.pins.show', compact('pin', 'residues', 'locations'));
     }
 
     /**
@@ -121,7 +124,7 @@ class PinController extends Controller
 
 
         session()->flash('message', 'El pin nuevo se ha creado con exito.');
-        return redirect('/users/pins');
+        return redirect(route('user.pins'));
     }
 
     /**
@@ -138,6 +141,6 @@ class PinController extends Controller
         }
 
         $pin->delete();
-        return redirect('users.pins.index');
+        return redirect(route('user.pins'));
     }
 }
