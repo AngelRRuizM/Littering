@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Pin;
 use App\User;
 use App\Location;
-use App\Residue;
+use App\ResidueType;
 
 class PinController extends Controller
 {
@@ -19,10 +19,10 @@ class PinController extends Controller
     public function index()
     {
         $pins = Pin::all();
-        $residues = Residue::all()->sortBy('name');
+        $residue_types = ResidueType::all()->sortBy('name');
         $locations = Location::all()->sortBy('name');
 
-        return view('users.pins.index', compact('pins', 'residues', 'locations'));
+        return view('users.pins.index', compact('pins', 'residue_types', 'locations'));
     }
 
     /**
@@ -36,7 +36,7 @@ class PinController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Almacena un pin nuevo.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -44,8 +44,8 @@ class PinController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'residue_id' => 'required|numeric',
-            'location_id' => 'required|numeric'
+            'residue_type_id' => 'required|numeric',
+            'location_id' => 'required|numeric',
         ]);
 
         if($validator->fails()){
@@ -55,12 +55,13 @@ class PinController extends Controller
         }
         
         $pin = new Pin;
-        $pin->residue_id = $request->residue_id;
+        $pin->residue_type_id = $request->residue_type_id;
         $pin->location_id = $request->location_id;
+        $pin->user_id = auth()->user()->id;
         $pin->save();
 
         session()->flash('message', 'El pin nuevo se ha creado con exito.');
-        return redirect( route ('users.pins'));
+        return redirect(route('user.pins'));
     }
 
     /**
@@ -75,7 +76,7 @@ class PinController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Muestra el formulario para editar el pin especificado.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -87,14 +88,14 @@ class PinController extends Controller
             return redirect()->back()->withErrors($errors);
         }
 
-        $residues = Residue::all()->sortBy('name');
+        $residue_types = ResidueType::all()->sortBy('name');
         $locations = Location::all()->sortBy('name');
 
-        return view('users.pins.show', compact('pin', 'residues', 'locations'));
+        return view('users.pins.edit', compact('pin', 'residue_types', 'locations'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualiza la información correspondiente a un pin.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -108,7 +109,7 @@ class PinController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-             'residue_id' => 'required|numeric',
+            'residue_type_id' => 'required|numeric',
             'location_id' => 'required|numeric'
         ]);
 
@@ -118,7 +119,7 @@ class PinController extends Controller
                 ->withErrors($validator);
         }
         
-        $pin->residue_id = $request->residue_id;
+        $pin->residue_type_id = $request->residue_type_id;
         $pin->location_id = $request->location_id;
         $pin->save();
 
@@ -128,7 +129,7 @@ class PinController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Elimina el pin especificado.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

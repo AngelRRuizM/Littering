@@ -16,7 +16,7 @@
 
                 @if(Auth::check())
                 <div class="login">
-                    <a href="/profile"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">{{ Auth::user()->name }}</span></a>
+                    <a href="/usuario"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">{{ Auth::user()->name }}</span></a>
                     <a href="/logout"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Cerrar sesión</span></a>
                 </div>
                 @else

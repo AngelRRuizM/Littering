@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    <h2 class="text-uppercase">Agregar ubicación</h2>
+                    <h2 class="text-uppercase">Editar ubicación</h2>
                     <p>Puedes escribir la dirección y se mostrará inmediatamente en el mapa.</p>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                 <input type="hidden" class="form-control" id="lat" name="lat" value="{{$location->lat}}">
                 <input type="hidden" class="form-control" id="lng" name="lng" value="{{$location->lng}}">
                 <div class="text-center">
-                    <button type="submit" class="btn btn-template-main" onclick="setCoords();"><i class="fa fa-user-md"></i>Agregar</button>
+                    <button type="submit" class="btn btn-template-main" onclick="setCoords();"><i class="fa fa-user-md"></i>Aceptar</button>
                     <script type="text/javascript">
                         function setCoords(){
                             document.getElementById('lat').value = marker.getPosition().lat();

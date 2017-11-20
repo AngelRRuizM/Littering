@@ -19,7 +19,7 @@
         <div class="row">
 
             <div class="col-md-12" id="customer-orders">
-                <p class="text-muted lead"><a href="{{ URL::route('user.locations.create') }}" class="btn btn-template-primary btn">agregar localización</a></p>
+                <p class="text-muted lead"><a href="{{ URL::route('user.locations.create') }}" class="btn btn-primary">Agregar localización</a></p>
                 
                 <div class="box">
                     <div class="table-responsive">
@@ -41,11 +41,10 @@
                                             <a href="{{ URL::route('user.locations.edit', ['location_id' => $location->id   ]) }}" class="btn btn-info btn-sm   ">Editar</a>
                                         </td>
                                         <td>
-                                            <form method="POST" action="{{ URL::route('user.locations.destroy', ['location_id' => $location->id   ]) }}" accept-charset="UTF-8">
-                                                <input name="_method" type="hidden" value="DELETE">
-                                                {{ csrf_field() }}
+                                            <form action="localizaciones/{{ $location->id }}" method="POST">
                                                 {{ method_field('DELETE') }}
-                                                <input class="btn btn-danger btn-sm" type="submit" value="Eliminar">
+                                                {{ csrf_field() }}
+                                                <button type="submit" class="btn btn-xs btn-danger">Eliminar</button>
                                             </form>
                                         </td>
                                         

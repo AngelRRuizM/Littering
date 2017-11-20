@@ -3,15 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Residue_type;
+use App\ResidueType;
 
 class Pin extends Model
 {
-    protected $fillable = ['user_id', 'residue_id', 'location_id'];
+    protected $fillable = ['user_id', 'residue_type_id', 'location_id'];
     protected $dates = ['updated_at'];
 
     public function residue_type(){
-        return $this->belongsTo(Residue_type::class);
+        return $this->belongsTo(ResidueType::class);
     }
 
     public function location(){

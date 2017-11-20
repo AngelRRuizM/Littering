@@ -27,7 +27,7 @@ Route::group(['prefix' => 'usuario', 'as' => 'user.', 'middleware' => 'auth'], f
     
     //Pins
     Route::get('pines', 'PinController@index')->name('pins');
-    Route::get('pines/{pin}/editar', 'PinController@edit')->name('pins');
+    Route::get('pines/{pin}/editar', 'PinController@edit')->name('pins.edit');
     Route::post('pines', 'PinController@store')->name('pins.store');
     Route::put('pines/{pin}', 'PinController@update')->name('pins.update');
     Route::delete('pines/{pin}', 'PinController@destroy')->name('pins.destroy');

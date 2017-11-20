@@ -23,7 +23,10 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/" >Inicio</a></li>
                     <li><a href="/#aboutus">Acerca de nosotros</a></li>
-                    <li><a href="/#partners">Colaboradores</a></li>
+                    @if(Auth::check())
+                    <li><a href="/usuario/pines" >Pines</a></li>
+                    <li><a href="/usuario/localizaciones" >Mis localizaciones</a></li>
+                    @endif
                 </ul>
 
             </div>

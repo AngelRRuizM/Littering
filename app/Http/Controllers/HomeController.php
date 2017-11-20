@@ -14,8 +14,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $residues = ResidueType::all();
-        return view('index', compact('residues'));
+        $residue_types = ResidueType::all();
+        return view('index', compact('residue_types'));
     }
 
     /**
