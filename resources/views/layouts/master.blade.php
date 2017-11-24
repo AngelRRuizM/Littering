@@ -83,9 +83,9 @@ _________________________________________________________ -->
 
     <!-- #### JAVASCRIPT FILES ### -->
 
-    @yield('scripts')
+    
     @include('layouts.scripts')
-
+    @yield('scripts')
 
 
 </body>

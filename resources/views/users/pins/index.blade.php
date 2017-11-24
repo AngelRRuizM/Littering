@@ -43,7 +43,7 @@
                                     <td><a href="{{ route('user.pins.collect', ['pin_id' => $pin->id]) }}" class="btn btn-success btn-sm">Recolectar</a></td>
                                     <td><a href="{{ route('user.pins.edit', ['pin_id' => $pin->id]) }}" class="btn btn-info btn-sm">Editar</a></td>
                                     <td>
-                                        <form action="{{ route('user.pins.destroy', ['pin_id' => $pin->id   ]) }}" method="POST">
+                                        <form class="delete" action="{{ route('user.pins.destroy', ['pin_id' => $pin->id   ]) }}" method="POST">
                                             {{ method_field('DELETE') }}
                                             {{ csrf_field() }}
                                             <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
@@ -139,4 +139,14 @@
 
 <!-- Google Maps key -->
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhWPoSrUkIkNTTV6lkGfZCToBac1M7TZA&callback=initMap"></script>
+
+<script>
+$(document).ready(function(){
+    $('.delete').submit(function(event){
+        if(!confirm("¿Estás seguro de que quieres eleminiar este pin?")){
+            event.preventDefault();
+        }
+    });
+});
+</script>
 @endsection
