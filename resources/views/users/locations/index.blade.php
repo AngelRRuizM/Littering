@@ -41,7 +41,7 @@
                                             <td>{{$location->address}}</td>
                                             <td><a href="{{ route('user.locations.edit', ['location_id' => $location->id]) }}" class="btn btn-info btn-sm">Editar</a></td>
                                             <td>
-                                                <form action="{{route('user.locations.destroy', ['location_id' => $location->id]) }}" method="POST">
+                                                <form class="delete" action="{{route('user.locations.destroy', ['location_id' => $location->id]) }}" method="POST">
                                                     {{ method_field('DELETE') }}
                                                     {{ csrf_field() }}
                                                     <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
@@ -68,4 +68,17 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function(){
+        $('.delete').submit(function(event){
+                if(!confirm("¿Estás seguro de querer borrar la localización?")){
+                    event.preventDefault();
+                }
+        });
+    });
+
+</script>
 @endsection

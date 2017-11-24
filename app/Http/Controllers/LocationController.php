@@ -44,7 +44,7 @@ class LocationController extends Controller
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
             'name' => 'required|max:50',
-            'address' => 'required|max:80',
+            'address' => 'required|max:150',
         ]);
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
