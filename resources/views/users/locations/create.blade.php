@@ -47,7 +47,6 @@
 @endsection
 
 @section('scripts')
-
 <script>
 var map;
 var origin;
@@ -114,5 +113,7 @@ function setCoords(){
     document.getElementById('lng').value = origin.getPosition().lng();
 };
 </script>
-    
+
+<!-- Google Maps key -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhWPoSrUkIkNTTV6lkGfZCToBac1M7TZA&callback=initMap"></script>  
 @endsection
