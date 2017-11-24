@@ -16,7 +16,7 @@ class LocationController extends Controller
      */
     public function index()
     {
-        $locations = Location::all()->sortBy('name');
+        $locations = auth()->user()->locations;
         
         return view('users.locations.index', compact('locations'));
     }
@@ -61,8 +61,7 @@ class LocationController extends Controller
             'user_id' => auth()->user()->id,
         ]);
 
-        session()->flash('message', 'La nueva localización ha sido guardada correctamente.');
-
+        session()->flash('message', 'La nueva localización ha sido guardada exitosamente.');
         return redirect( route('user.locations') );
     }
 
@@ -74,11 +73,6 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-        if($location==null){
-            $errors = ['No se ha encontrado el id especificado'];
-            return redirect()->back()->withErrors($errors);
-        }
-
         return view('users.locations.edit', compact('location'));
     }
 
@@ -91,17 +85,12 @@ class LocationController extends Controller
      */
     public function update(Request $request, Location $location)
     {
-        if($location==null){
-            $errors = ['No se ha encontrado el id especificado'];
-            return redirect()->back()->withErrors($errors);
-        }
-
         //verifica que los datos estén presentes y que cuenten con la longitud adecuada
         $validator = Validator::make($request->all(), [
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
             'name' => 'required|max:50',
-            'address' => 'required|max:80',
+            'address' => 'required|max:150',
         ]);
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
@@ -129,11 +118,6 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
-        if($location==null){
-            $errors = ['No se ha encontrado el id especificado'];
-            return redirect()->back()->withErrors($errors);
-        }
-
         $location->delete();
         return redirect(route('user.locations'));
     }

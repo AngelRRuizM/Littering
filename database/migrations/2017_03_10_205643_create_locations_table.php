@@ -18,7 +18,7 @@ class CreateLocationsTable extends Migration
             $table->double('lat', 10, 6);
             $table->double('lng', 10, 6);
             $table->string('name', 50);
-            $table->string('address', 80);
+            $table->string('address', 150);
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 

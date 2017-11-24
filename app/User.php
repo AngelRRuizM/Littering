@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Location;
+use App\Pin;
 
 class User extends Authenticatable
 {
@@ -26,4 +28,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function locations(){
+        return $this->hasMany(Location::class);
+    }
+
+    public function pins(){
+        return $this->hasMany(Pin::class);
+    }
 }

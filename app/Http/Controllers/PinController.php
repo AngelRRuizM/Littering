@@ -8,6 +8,8 @@ use App\Pin;
 use App\User;
 use App\Location;
 use App\ResidueType;
+use JavaScript;
+use Carbon\Carbon;
 
 class PinController extends Controller
 {
@@ -18,9 +20,14 @@ class PinController extends Controller
      */
     public function index()
     {
-        $pins = Pin::all();
+        Carbon::setLocale('es');
+        $pins = Pin::where('user_id', auth()->user()->id)->where('collected', false)->with('location')->get();
         $residue_types = ResidueType::all()->sortBy('name');
-        $locations = Location::all()->sortBy('name');
+        $locations = auth()->user()->locations->sortBy('name');
+
+        JavaScript::put([
+            'pins' => $pins
+        ]);
 
         return view('users.pins.index', compact('pins', 'residue_types', 'locations'));
     }
@@ -60,7 +67,7 @@ class PinController extends Controller
         $pin->user_id = auth()->user()->id;
         $pin->save();
 
-        session()->flash('message', 'El pin nuevo se ha creado con exito.');
+        session()->flash('message', 'El pin se ha creado con exito.');
         return redirect(route('user.pins'));
     }
 
@@ -83,15 +90,25 @@ class PinController extends Controller
      */
     public function edit(Pin $pin)
     {
-        if($pin == null){
-            $errors = ['No se ha encontrado el id especificado.'];
-            return redirect()->back()->withErrors($errors);
-        }
-
         $residue_types = ResidueType::all()->sortBy('name');
         $locations = Location::all()->sortBy('name');
 
         return view('users.pins.edit', compact('pin', 'residue_types', 'locations'));
+    }
+
+    /**
+     * Muestra el formulario para editar el pin especificado.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function collect(Pin $pin)
+    {
+        $pin->collected = true;
+        $pin->save();
+
+        session()->flash('message', 'El pin se ha marcado como recolectado exitosamente.');
+        return redirect( route('user.pins'));
     }
 
     /**
@@ -103,11 +120,6 @@ class PinController extends Controller
      */
     public function update(Request $request, Pin $pin)
     {
-        if($pin == null){
-            $errors = ['No se ha encontrado el id especificado.'];
-            return redirect()->back()->withErrors($errors);
-        }
-
         $validator = Validator::make($request->all(), [
             'residue_type_id' => 'required|numeric',
             'location_id' => 'required|numeric'
@@ -124,7 +136,7 @@ class PinController extends Controller
         $pin->save();
 
 
-        session()->flash('message', 'El pin nuevo se ha creado con exito.');
+        session()->flash('message', 'El pin se ha creado exitosamente.');
         return redirect(route('user.pins'));
     }
 
@@ -136,12 +148,9 @@ class PinController extends Controller
      */
     public function destroy(Pin $pin)
     {
-        if($pin == null){
-            $errors = ['No se ha encontrado el id especificado.'];
-            return redirect()->back()->withErrors($errors);
-        }
-
         $pin->delete();
+
+        session()->flash('message', 'El pin se ha eliminado exitosamente.');
         return redirect(route('user.pins'));
     }
 }

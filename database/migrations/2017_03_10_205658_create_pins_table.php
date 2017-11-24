@@ -15,6 +15,7 @@ class CreatePinsTable extends Migration
     {
         Schema::create('pins', function (Blueprint $table) {
             $table->increments('id');
+            $table->boolean('collected')->default(false);
             $table->integer('residue_type_id')->unsigned();
             $table->integer('user_id')->unsigned();
             $table->integer('location_id')->unsigned();

@@ -15,15 +15,19 @@
                 </div>
 
                 @if(Auth::check())
-                <div class="login">
-                    <a href="/usuario"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">{{ Auth::user()->name }}</span></a>
-                    <a href="/logout"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Cerrar sesión</span></a>
-                </div>
+                    <div class="login">
+                        <a href="/usuario"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">{{ Auth::user()->name }}</span></a>
+                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-in"></i>Cerrar sesión</a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </div>
                 @else
-                <div class="login">
-                    <a href="/login"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Iniciar sesión</span></a>
-                    <a href="/register"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Registrarse</span></a>
-                </div>
+                    <div class="login">
+                        <a href="/login"><i class="fa fa-sign-in"></i> <span class="hidden-xs text-uppercase">Iniciar sesión</span></a>
+                        <a href="/register"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">Registrarse</span></a>
+                    </div>
                 @endif
 
             </div>

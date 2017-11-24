@@ -4,10 +4,7 @@
 <section class="bar background-white no-mb">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
-
-            </div>
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="box-simple box-white same-height">
                     <div class="row">
                         <h2>{{ auth()->user()->name }}</h2>

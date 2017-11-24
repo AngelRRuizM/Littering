@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::get('/map', 'HomeController@show');
+Route::get('/map', 'HomeController@showMap')->name('map');
 
 Auth::routes();
 
@@ -28,6 +28,7 @@ Route::group(['prefix' => 'usuario', 'as' => 'user.', 'middleware' => 'auth'], f
     //Pins
     Route::get('pines', 'PinController@index')->name('pins');
     Route::get('pines/{pin}/editar', 'PinController@edit')->name('pins.edit');
+    Route::get('pines/{pin}/recoger', 'PinController@collect')->name('pins.collect');
     Route::post('pines', 'PinController@store')->name('pins.store');
     Route::put('pines/{pin}', 'PinController@update')->name('pins.update');
     Route::delete('pines/{pin}', 'PinController@destroy')->name('pins.destroy');
@@ -40,3 +41,7 @@ Route::group(['prefix' => 'usuario', 'as' => 'user.', 'middleware' => 'auth'], f
     Route::put('localizaciones/{location}', 'LocationController@update')->name('locations.update');
     Route::delete('localizaciones/{location}', 'LocationController@destroy')->name('locations.destroy');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
