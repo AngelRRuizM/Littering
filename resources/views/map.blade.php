@@ -2,7 +2,7 @@
 
 @section('content')
         
-        <div class="bar background-gray">
+        <div class="bar background-gray" style="padding-top:30px;">
         @foreach($residue_types as $residue_type)
             <div class="col-md-3 col-sm-3">
                 <div class="team-member" data-animate="fadeInUp">
@@ -25,7 +25,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div id="map" class="col-sm-12" style="height: 600px"></div>
+        <div id="map" class="col-sm-12" style="height: 700px"></div>
     </div>
 </div>
 

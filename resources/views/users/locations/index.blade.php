@@ -20,7 +20,8 @@
 
             <div class="col-md-12" id="customer-orders">
                 @include('layouts.message')
-                <p class="text-muted lead"><a href="{{ URL::route('user.locations.create') }}" class="btn btn-primary">Agregar localización</a></p>
+                @include('layouts.info')
+                <p class="text-muted lead"><a href="{{ URL::route('user.locations.create') }}" class="btn btn-template-main">Agregar localización</a></p>
                 
                 <div class="box">
                      @if(sizeof(Auth::user()->locations) > 0)

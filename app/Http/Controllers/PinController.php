@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Pin;
 use App\User;
 use App\Location;
@@ -20,13 +21,18 @@ class PinController extends Controller
      */
     public function index()
     {
+        if(sizeof(Auth::user()->locations) == 0){
+            session()->flash('info', 'Antes de agregar pines, debes agregar una Localizacion.');
+            return redirect(route('user.locations'));
+        }
+
         Carbon::setLocale('es');
-        $pins = Pin::where('user_id', auth()->user()->id)->where('collected', false)->with('location')->get();
+        $pins = Pin::where('user_id', auth()->user()->id)->where('collected', false)->with('location')->get()->sortByDesc('updated_at');
         $residue_types = ResidueType::all()->sortBy('name');
         $locations = auth()->user()->locations->sortBy('name');
 
         JavaScript::put([
-            'pins' => $pins
+            'pins' => $pins->toArray()
         ]);
 
         return view('users.pins.index', compact('pins', 'residue_types', 'locations'));

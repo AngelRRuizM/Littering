@@ -25,7 +25,7 @@
                     <input type="hidden" class="form-control" id="lat" name="lat">
                     <input type="hidden" class="form-control" id="lng" name="lng">
                     <div class="text-center col-md-2">
-                        <button type="submit" class="btn btn-template-main" onclick="setCoords()">Agregar</button>
+                        <button type="submit" class="btn btn-template-main" onclick="setCoords()" style="margin-top:25px;">Agregar</button>
                         <script type="text/javascript">
                         </script>
                     </div>

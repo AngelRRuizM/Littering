@@ -21,7 +21,7 @@
     <link href="{{ asset('css/animate.css')}}" rel="stylesheet">
 
     <!-- Theme stylesheet, if possible do not edit this stylesheet -->
-    <link href="{{ asset('css/style.default.css')}}" rel="stylesheet" d="theme-stylesheet">
+    <link href="{{ asset('css/style.green.css')}}" rel="stylesheet" d="theme-stylesheet">
 
     <!-- Custom stylesheet - for your changes -->
     <link href="{{ asset('css/custom.css')}}" rel="stylesheet">
@@ -71,7 +71,7 @@ _________________________________________________________ -->
 
         </header>
 
-        <!-- *** LOGIN MODAL ***-->
+        <!-- *** Content ***-->
         @yield('content')
 
         <!-- *** FOOTER ***-->
