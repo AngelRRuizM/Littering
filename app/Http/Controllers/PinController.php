@@ -56,10 +56,7 @@ class PinController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'residue_type_id' => 'required|numeric',
-            'location_id' => 'required|numeric',
-        ]);
+        $validator = Pin::validate($request->all());
 
         if($validator->fails()){
             return redirect()->back()
@@ -126,10 +123,7 @@ class PinController extends Controller
      */
     public function update(Request $request, Pin $pin)
     {
-        $validator = Validator::make($request->all(), [
-            'residue_type_id' => 'required|numeric',
-            'location_id' => 'required|numeric'
-        ]);
+        $validator = Pin::validate($request->all());
 
         if($validator->fails()){
             return redirect()->back()
