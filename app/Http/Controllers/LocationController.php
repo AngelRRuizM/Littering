@@ -43,8 +43,8 @@ class LocationController extends Controller
         $validator = Validator::make($request->all(), [
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
-            'name' => 'required|max:50',
-            'address' => 'required|max:150',
+            'name' => 'required|max:50|min:1',
+            'address' => 'required|max:150|min:1',
         ]);
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
@@ -89,8 +89,8 @@ class LocationController extends Controller
         $validator = Validator::make($request->all(), [
             'lat' => 'required|numeric',
             'lng' => 'required|numeric',
-            'name' => 'required|max:50',
-            'address' => 'required|max:150',
+            'name' => 'required|max:50|min:1',
+            'address' => 'required|max:150|min:1',
         ]);
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
