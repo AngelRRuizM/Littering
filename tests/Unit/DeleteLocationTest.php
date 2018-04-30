@@ -9,12 +9,31 @@ use App\Location;
 class DeleteLocationTest extends TestCase
 {
     /**
-     * A basic test example.
+     * Delete a location that exists
      *
      * @return void
      */
-    public function testExample()
+    public function testSucessfulDelete()
     {
-        $this->assertTrue(true);
+        $locations = Location::all();
+        $location = Location::find(1);
+        $location->delete();
+        $locations2 = Location::all();
+        $this->assertNotEqual($locations, $locations2);
+    }
+
+    /**
+     * Delete a location that doesn´t exists
+     *
+     * @return void
+     */
+    public function testUnsucessfulDelete()
+    {
+        $locations = Location::all();
+        $location = Location::find(0);
+        if ($location != null)
+            $location->delete();
+        $locations2 = Location::all();
+        $this->assertEqual($locations, $locations2);
     }
 }
