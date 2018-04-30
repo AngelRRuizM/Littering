@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Validator;
 use App\Location;
 use App\Pin;
 
@@ -35,5 +36,13 @@ class User extends Authenticatable
 
     public function pins(){
         return $this->hasMany(Pin::class);
+    }
+
+    public static function validate($data) {
+        return Validator::make($request->all(), [
+            'name' => 'required|max:50',
+            'email'=> 'required|max:250|email',
+            'name' => 'required|max:50'
+        ]);
     }
 }

@@ -54,10 +54,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($errors);
         }
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:50',
-            'email'=> 'required|max:250|email',
-        ]);
+        $validator = User::validate($request->all());
 
         $userEmail=User::all()->where('email', $request->email);
 
