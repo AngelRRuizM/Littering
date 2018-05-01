@@ -294,9 +294,9 @@ class RegisterUserTest extends TestCase
         $user = $registerController->create($data);
 
         if($retrieved = User::find($user->id)){
-            $this->assertEquals($user['name'], $retrieved->name);
-            $this->assertEquals($user['email'], $retrieved->email);
-            $this->assertEquals($user['password'], $retrieved->password);
+            $this->assertEquals($data['name'], $retrieved->name);
+            $this->assertEquals($data['email'], $retrieved->email);
+            $this->assertTrue(Hash::check($data['password'], $retrieved->password));
         }
         else{
             $this->fail('User not found in the database');
