@@ -51,7 +51,7 @@
 
                         <div class="form-group">
                             <div class="col-md-8 col-md-offset-4">
-                                <button type="submit" class="btn btn-template-main">Inicia sesión</button>
+                                <button type="submit" class="btn btn-template-main" id="login">Inicia sesión</button>
                                 <a class="btn btn-template-link" href="{{ route('password.request') }}">¿Olvidaste la contraseña?</a>
                             </div>
                         </div>

@@ -151,6 +151,73 @@ class RegisterUserTest extends TestCase
     }
 
     /**
+     * The password is 51 characters long.
+     *
+     * @return void
+     */
+    public function testNotValidTopBoundaryPasswordLength()
+    {
+        $registerController = App::make('App\Http\Controllers\Auth\RegisterController');
+        
+        $this->assertTrue( $registerController->validator([
+            'name' => 'User name',
+            'email' => 'newUser@littering.com',
+            'password' => 'abcdefghijklmnopqrstuvwxyzabcdefghijqlmnopqrstuvxyz',
+            'password_confirmation' => 'abcdefghijklmnopqrstuvwxyzabcdefghijqlmnopqrstuvxyz'
+        ])->fails());
+    }
+
+    /**
+     * The password is 3 characters long.
+     *
+     * @return void
+     */
+    public function testNotValidLowBoundaryPasswordLength()
+    {
+        $registerController = App::make('App\Http\Controllers\Auth\RegisterController');
+        
+        $this->assertTrue( $registerController->validator([
+            'name' => '',
+            'email' => 'newUser@littering.com',
+            'password' => 'pas',
+            'password_confirmation' => 'pas'
+        ])->fails());
+    }
+
+    /**
+     * The password is 50 characters long.
+     *
+     * @return void
+     */
+    public function testValidTopBoundaryPasswordLength()
+    {
+        $registerController = App::make('App\Http\Controllers\Auth\RegisterController');
+        $this->assertFalse( $registerController->validator([
+            'name' => 'User name',
+            'email' => 'newUser@littering.com',
+            'password' => 'abcdefghijklmnopqrstuvwxyzabcdefghijqlmnopqrstuvxy',
+            'password_confirmation' => 'abcdefghijklmnopqrstuvwxyzabcdefghijqlmnopqrstuvxy'
+        ])->fails());
+    }
+
+    /**
+     * The password is 4 characters long.
+     *
+     * @return void
+     */
+    public function testValidLowBoundaryPasswordLength()
+    {
+        $registerController = App::make('App\Http\Controllers\Auth\RegisterController');
+        
+        $this->assertFalse( $registerController->validator([
+            'name' => 'User name',
+            'email' => 'newUser@littering.com',
+            'password' => 'pass',
+            'password_confirmation' => 'pass'
+        ])->fails());
+    }
+
+    /**
      * The email is 101 characters long.
      *
      * @return void
