@@ -37,12 +37,4 @@ class User extends Authenticatable
     public function pins(){
         return $this->hasMany(Pin::class);
     }
-
-    public static function validate($data) {
-        return Validator::make($request->all(), [
-            'name' => 'required|max:50',
-            'email'=> 'required|max:250|email',
-            'name' => 'required|max:50'
-        ]);
-    }
 }
