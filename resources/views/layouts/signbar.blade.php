@@ -17,7 +17,7 @@
                 @if(Auth::check())
                     <div class="login">
                         <a href="/usuario"><i class="fa fa-user"></i> <span class="hidden-xs text-uppercase">{{ Auth::user()->name }}</span></a>
-                        <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-in"></i>Cerrar sesión</a>
+                        <a id="logout" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="fa fa-sign-in"></i>Cerrar sesión</a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}

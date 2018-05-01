@@ -119,7 +119,23 @@ class LoginTest extends DuskTestCase
                     ->type('email', $user->email)
                     ->type('password', 'secret')
                     ->press('#login')
-                    ->assertPathIs('/usuario');
+                    ->waitForLocation('/usuario');
+        });
+    }
+
+    /**
+     * Test user is already logged in.
+     *
+     * @return void
+     */
+    public function testAlreadyLoggedIn()
+    {
+        $user = User::first();
+        
+        $this->browse(function ($browser) use ($user) {
+            $browser->visit('/login')
+                    ->assertTitle('Littering')
+                    ->assertPathIs('/');
         });
     }
 }
