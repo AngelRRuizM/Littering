@@ -11,6 +11,10 @@ class PinsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('pins')->insert([
+            'residue_type_id' => 1,
+            'location_id' => 1,
+            'user_id' => 1
+        ]);
     }
 }
