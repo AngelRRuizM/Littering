@@ -24,7 +24,7 @@ class Location extends Model
             'lng' => 'required|numeric',
             'name' => 'required|max:50|min:1',
             'address' => 'required|max:150|min:1',
-            'user_id' => 'reqquired|nummeric|exists:users,id'
+            'user_id' => 'required|numeric|exists:users,id'
         ]);
     }
 }

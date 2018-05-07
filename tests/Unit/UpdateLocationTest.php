@@ -4,10 +4,14 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Location;
 
 class UpdateLocationTest extends TestCase
 {
+
+    use DatabaseTransactions;
+
     /**
      * The name of the location is empty
      *
@@ -191,7 +195,7 @@ class UpdateLocationTest extends TestCase
      */
     public function testUnexistantUser()
     {
-        $this->assertFalse(Location::validate([
+        $this->assertTrue(Location::validate([
             'lat' => '19.048251',
             'lng' => '-98.190543',
             'name' => 'asfg',
@@ -215,18 +219,25 @@ class UpdateLocationTest extends TestCase
             'address' => 'asdf',
             'user_id' => '1'
         ];
-
-        $location = Location::find(1);
-        if (!Location::validate(x)->fails()){
-            $location->lat = $x->lat;
-            $location->lng = $x->lng;
-            $location->name = $x->name;
-            $location->address = $x->address;
-            $location->user_id = $x->user_id;
+        $locationP = Location::create($x);
+        $location = Location::find($locationP->id);
+        $x = [
+            'lat' => '19.048251',
+            'lng' => '-98.190543',
+            'name' => 'lololol',
+            'address' => 'asdf',
+            'user_id' => '1'
+        ];
+        if (!Location::validate($x)->fails()){
+            $location->lat = $x['lat'];
+            $location->lng = $x['lng'];
+            $location->name = $x['name'];
+            $location->address = $x['address'];
+            $location->user_id = $x['user_id'];
             $location->save();
         }
-
-        $this->assertEquals($location, Location::find($location->id));
+        $location = Location::find($locationP->id);
+        $this->assertNotEquals($locationP, $location);
     }
 
     /**
@@ -244,17 +255,27 @@ class UpdateLocationTest extends TestCase
             'address' => 'asdf',
             'user_id' => '1'
         ];
-
-        $location = Location::find(1);
-        if (!Location::validate(x)->fails()){
-            $location->lat = $x->lat;
-            $location->lng = $x->lng;
-            $location->name = $x->name;
-            $location->address = $x->address;
-            $location->user_id = $x->user_id;
+        $locationP = Location::create($x);
+        $location = Location::find($locationP->id);
+        $x = [
+            'lat' => '19.048251',
+            'lng' => '-98.190543',
+            'name' => 'asfg',
+            'address' => 'asdf',
+            'user_id' => '0'
+        ];
+        if (!Location::validate($x)->fails()){
+            $location->lat = $x['lat'];
+            $location->lng = $x['lng'];
+            $location->name = $x['name'];
+            $location->address = $x['address'];
+            $location->user_id = $x['user_id'];
             $location->save();
         }
-
-        $this->assertEquals($location, Location::find($location->id));
+        $locationC = Location::find($locationP->id);
+        $this->assertEquals($locationP->lat, $locationC->lat);
+        $this->assertEquals($locationP->lng, $locationC->lng);
+        $this->assertEquals($locationP->name, $locationC->name);
+        $this->assertEquals($locationP->address, $locationC->address);
     }
 }

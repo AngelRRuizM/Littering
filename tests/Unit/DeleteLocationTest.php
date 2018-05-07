@@ -4,10 +4,14 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Location;
 
 class DeleteLocationTest extends TestCase
 {
+
+    use DatabaseTransactions;
+
     /**
      * Delete a location that exists
      *
@@ -15,11 +19,19 @@ class DeleteLocationTest extends TestCase
      */
     public function testSucessfulDelete()
     {
+        $x = [
+            'lat' => '19.048251',
+            'lng' => '-98.190543',
+            'name' => 'asdf',
+            'address' => 'asdf',
+            'user_id' => '1'
+        ];
+        $location =  Location::create($x);
         $locations = Location::all();
-        $location = Location::find(1);
+        $location = Location::find($location->id);
         $location->delete();
         $locations2 = Location::all();
-        $this->assertNotEqual($locations, $locations2);
+        $this->assertNotEquals($locations, $locations2);
     }
 
     /**
@@ -34,6 +46,6 @@ class DeleteLocationTest extends TestCase
         if ($location != null)
             $location->delete();
         $locations2 = Location::all();
-        $this->assertEqual($locations, $locations2);
+        $this->assertEquals($locations, $locations2);
     }
 }

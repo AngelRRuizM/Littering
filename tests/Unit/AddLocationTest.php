@@ -4,10 +4,14 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Location;
 
 class AddLocationTest extends TestCase
 {
+
+    use DatabaseTransactions;
+
     /**
      * The name of the location is empty
      *
@@ -191,7 +195,7 @@ class AddLocationTest extends TestCase
      */
     public function testUnexistantUser()
     {
-        $this->assertFalse(Location::validate([
+        $this->assertTrue(Location::validate([
             'lat' => '19.048251',
             'lng' => '-98.190543',
             'name' => 'asfg',
@@ -215,14 +219,14 @@ class AddLocationTest extends TestCase
             'address' => 'asdf',
             'user_id' => '1'
         ];
-        if (Location::validate(x)->fails()){
+        if (Location::validate($x)->fails()){
             $location = null;
         }
         else{
-            $location =  Location::create(x);
+            $location =  Location::create($x);
         }
 
-        $this->assertEquals($location, Location::find($location->id));
+        $this->assertNotEquals($location, null);
     }
 
     /**
@@ -240,11 +244,11 @@ class AddLocationTest extends TestCase
             'address' => 'asdf',
             'user_id' => '0'
         ];
-        if (Location::validate(x)->fails()){
+        if (Location::validate($x)->fails()){
             $location = null;
         }
         else{
-            $location =  Location::create(x);
+            $location =  Location::create($x);
         }
 
         $this->assertEquals($location, null);
