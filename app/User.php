@@ -37,4 +37,8 @@ class User extends Authenticatable
     public function pins(){
         return $this->hasMany(Pin::class);
     }
+
+    public function unmarkedPins(){
+        return $this->pins->where('collected', true);
+    }
 }
