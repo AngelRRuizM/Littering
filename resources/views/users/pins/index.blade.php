@@ -122,11 +122,19 @@
                     @endif
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="map" class="col-sm-12" style="height: 500px"></div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
 @endsection
+
+@include('layouts.map')
 
 @section('scripts')
 <script>

@@ -66,7 +66,7 @@
             </div>
             <!-- /.col-md-12 -->
         </div>
-
+        
         @include('users.locations.create')
     </div>
 </div>

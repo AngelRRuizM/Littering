@@ -13,28 +13,27 @@
             </div>
             <div class="col-md-4">
                 <form action="{{ URL::route('user.locations.update', ['location_id' => $location->id   ]) }}" method="POST">
-                {{ csrf_field() }}
-                {{ method_field('PUT') }}
-                <div class="form-group">
-                    <label for="name">Nombre de la ubicación</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{$location->name}}" required>
-                </div>
-                <div class="form-group">
-                    <label for="address">Dirección</label>
-                    <input type="text" class="form-control" id="address" name="address" value="{{$location->address}}" required>
-                </div>
-                <input type="hidden" class="form-control" id="lat" name="lat" value="{{$location->lat}}">
-                <input type="hidden" class="form-control" id="lng" name="lng" value="{{$location->lng}}">
-                <div class="text-center">
-                    <button type="submit" class="btn btn-template-main" onclick="setCoords();"><i class="fa fa-user-md"></i>Aceptar</button>
-                    <script type="text/javascript">
-                        function setCoords(){
-                            document.getElementById('lat').value = marker.getPosition().lat();
-                            document.getElementById('lng').value = marker.getPosition().lng();
-                        };
-                    </script>
-                </div>
-                <hr>
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
+
+                    <div class="form-group">
+                        <label for="name">Nombre de la ubicación</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{$location->name}}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Dirección</label>
+                        <input type="text" class="form-control" id="address" name="address" value="{{$location->address}}" required>
+                    </div>
+
+                    <input type="hidden" class="form-control" id="lat" name="lat" value="{{$location->lat}}">
+                    <input type="hidden" class="form-control" id="lng" name="lng" value="{{$location->lng}}">
+                    
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-template-main" onclick="setCoords();">Aceptar</button>
+                    </div>
+                    
+                    <hr>
                 </form>
                 @include('layouts.errors')
             </div>
@@ -42,7 +41,7 @@
             <div class="col-md-8">
                 <div class="row">
                     <p>Marca tu ubicación</p>
-                    @include('layouts.mapinput')
+                    <div id="map" class="col-sm-12" style="height: 500px"></div>
                 </div>
                 <br>
             </div>
@@ -50,3 +49,5 @@
     </div>
 </div>
 @endsection
+
+@include('layouts.mapinput')

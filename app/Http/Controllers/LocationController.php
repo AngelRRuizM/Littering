@@ -6,6 +6,7 @@ use App\Location;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use JavaScript;
 
 class LocationController extends Controller
 {
@@ -73,6 +74,10 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
+        JavaScript::put([
+            'loc' => $location
+        ]);
+
         return view('users.locations.edit', compact('location'));
     }
 
