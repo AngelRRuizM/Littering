@@ -21,9 +21,9 @@
             <div class="col-md-12" id="customer-orders">
                 @include('layouts.message')
                 @include('layouts.info')
-                <p class="text-muted lead"><a href="{{ URL::route('user.locations.create') }}" class="btn btn-template-main">Agregar localización</a></p>
                 
-                <div class="box">
+                <div class="row">
+                    <h3>Agregar un nuevo pin</h3>
                      @if(sizeof(Auth::user()->locations) > 0)
                         <div class="table-responsive">
                             <table class="table table-hover">
@@ -57,7 +57,7 @@
                         </div>
                         <!-- /.table-responsive -->
                     @else
-                        <p>Aún no tienes localizaciones. Agrega una.</p>
+                        <p>Aún no tienes localizaciones registradas.</p>
                     @endif
 
                 </div>
@@ -66,6 +66,8 @@
             </div>
             <!-- /.col-md-12 -->
         </div>
+
+        @include('users.locations.create')
     </div>
 </div>
 
