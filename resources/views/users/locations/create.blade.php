@@ -1,50 +1,34 @@
-@extends('layouts.master')
 
-@section('content')
-    
-<div id="content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box">
-                    <h2 class="text-uppercase">Agregar ubicación</h2>
-                    <p>Puedes escribir la dirección y se mostrará inmediatamente en el mapa.</p>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <form action="{{ route('user.locations.store') }}" method="POST">
-                    {{ csrf_field() }}
-                    <div class="form-group col-md-5">
-                        <label for="name">Nombre de la ubicación</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
-                    </div>
-                    <div class="form-group col-md-5">
-                        <label for="address">Dirección</label>
-                        <input type="text" class="form-control" id="address" name="address" onchange="setOrigin()" required>
-                    </div>
-                    <input type="hidden" class="form-control" id="lat" name="lat">
-                    <input type="hidden" class="form-control" id="lng" name="lng">
-                    <div class="text-center col-md-2">
-                        <button type="submit" class="btn btn-template-main" onclick="setCoords()" style="margin-top:25px;">Agregar</button>
-                        <script type="text/javascript">
-                        </script>
-                    </div>
-                    <hr>
-                </form>
-                @include('layouts.errors')
-            </div>
+<div class="row">
+    <h3>Agregar ubicación</h3>
+    <div class="col-md-12 box">
+        <form action="{{ route('user.locations.store') }}" method="POST">
+            {{ csrf_field() }}
+            <input type="hidden" class="form-control" id="lat" name="lat">
+            <input type="hidden" class="form-control" id="lng" name="lng">
+            <input type="hidden" class="form-control" id="address" name="address">
 
             <div class="col-md-12">
                 <div class="row">
-                    <p>Marca tu ubicación</p>
+                    
+                    <p>Arrastra el pin a la localización deseada.</p>
                     @include('layouts.mapinput')
                 </div>
                 <br>
             </div>
-        </div>
+
+            <div class="form-group col-md-6">
+                <label for="name">Nombre de la ubicación</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+    
+            <div class="form-group pull-right">
+                <button type="submit" class="btn btn-template-main" id="submit" onclick="setCoords()" style="margin-top:25px;">Agregar</button>
+            </div>
+        </form>
+        @include('layouts.errors')
     </div>
 </div>
-@endsection
 
 @section('scripts')
 <script>
@@ -101,6 +85,7 @@ function geocodeAddress(input_id, marker) {
     var address = document.getElementById(input_id).value;
     geocoder.geocode({'address': address}, function(results, status) {
     if (status === 'OK') {
+        origin.position = results[0].geometry.location;      
         marker.setPosition(results[0].geometry.location);
     } else {
         alert('Geocode was not successful for the following reason: ' + status);
@@ -111,7 +96,11 @@ function geocodeAddress(input_id, marker) {
 function setCoords(){
     document.getElementById('lat').value = origin.getPosition().lat();
     document.getElementById('lng').value = origin.getPosition().lng();
-};
+}
+
+function toggleDisabled() {
+    document.getElementById('submit').disabled = !document.getElementById('submit').disabled;
+}
 </script>
 
 <!-- Google Maps key -->

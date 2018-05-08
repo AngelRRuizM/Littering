@@ -13,7 +13,6 @@
 
 @endsection
 
-
 @section('content')
 <section class="bar background-white no-mb">
     <div class="container">
@@ -124,44 +123,12 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-12">
-            <div id="map" class="col-sm-12" style="height: 600px"></div>
-        </div>
     </div>
 </section>
 
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
-    var map;
-    function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 19.020638, lng: -98.243254},
-            zoom: 15
-        });
-        
-        var image, coords, marker;
-        for(var i=0; i < pins.length; i++){
-            if(!pins[i].collected){
-                image = '/img/marker' + pins[i].residue_type_id + '.png';
-                coords = new google.maps.LatLng(pins[i].location.lat, pins[i].location.lng);
-                marker = new google.maps.Marker({
-                    position : coords,  
-                    map : map,
-                    icon : image,
-                    zIndex: i+1
-                });
-                map.setCenter(coords);
-            }
-        }
-    }
-</script>
-
-<!-- Google Maps key -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhWPoSrUkIkNTTV6lkGfZCToBac1M7TZA&callback=initMap"></script>
-
 <script>
 $(document).ready(function(){
     $('.delete').submit(function(event){

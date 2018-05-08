@@ -21,7 +21,7 @@
                     <li><a href="/" >Inicio</a></li>
                     <li><a href="/#aboutus">Acerca de nosotros</a></li>
                     @if(Auth::check())
-                        <li><a href="/usuario/pines" >Mis pines</a></li>
+                        <li><a href="/usuario/pines" >Mis residuos</a></li>
                         <li><a href="/usuario/localizaciones" >Mis localizaciones</a></li>
                     @endif
                 </ul>
