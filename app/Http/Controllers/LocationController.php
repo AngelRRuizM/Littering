@@ -41,12 +41,7 @@ class LocationController extends Controller
     public function store(Request $request)
     {
         //verifica que los datos estén presentes y que cuenten con la longitud adecuada
-        $validator = Validator::make($request->all(), [
-            'lat' => 'required|numeric',
-            'lng' => 'required|numeric',
-            'name' => 'required|max:50|min:1',
-            'address' => 'required|max:150|min:1',
-        ]);
+        $validator = Location::validate($request->all());
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
         if($validator->fails()){
@@ -91,12 +86,7 @@ class LocationController extends Controller
     public function update(Request $request, Location $location)
     {
         //verifica que los datos estén presentes y que cuenten con la longitud adecuada
-        $validator = Validator::make($request->all(), [
-            'lat' => 'required|numeric',
-            'lng' => 'required|numeric',
-            'name' => 'required|max:50|min:1',
-            'address' => 'required|max:150|min:1',
-        ]);
+        $validator = Location::validate($request->all());
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
         if($validator->fails()){
@@ -124,6 +114,8 @@ class LocationController extends Controller
     public function destroy(Location $location)
     {
         $location->delete();
+        
+        session()->flash('message', 'La localización se ha eliminado exitosamente.');
         return redirect(route('user.locations'));
     }
 }
