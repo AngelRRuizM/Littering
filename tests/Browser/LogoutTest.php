@@ -38,7 +38,7 @@ class LogoutTest extends DuskTestCase
                     ->type('email', $user->email)
                     ->type('password', 'secret')
                     ->press('#login')
-                    ->waitForLocation('/usuario')
+                    ->waitForLocation('/usuario/localizaciones')
                     ->press('#logout')
                     ->waitForLocation('/');
         });
