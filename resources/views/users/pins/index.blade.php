@@ -20,7 +20,7 @@
             @include('layouts.message')
 
             <div class="row">
-                <h3>Agregar un nuevo pin</h3>
+                <h3>Agregar un nuevo pin de residuo</h3>
                 
                 @if(sizeof(Auth::user()->locations) > 0)
                     <form method="POST" action="{{route('user.pins.store')}}">

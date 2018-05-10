@@ -40,8 +40,11 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
+
         //verifica que los datos estén presentes y que cuenten con la longitud adecuada
-        $validator = Location::validate($request->all());
+        $validator = Location::validate($data);
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
         if($validator->fails()){
@@ -85,8 +88,11 @@ class LocationController extends Controller
      */
     public function update(Request $request, Location $location)
     {
+        $data = $request->all();
+        $data['user_id'] = auth()->user()->id;
+
         //verifica que los datos estén presentes y que cuenten con la longitud adecuada
-        $validator = Location::validate($request->all());
+        $validator = Location::validate($data);
 
         //regresa a la página anterior si hubo algún error en los datos recibidos.
         if($validator->fails()){

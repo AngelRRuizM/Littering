@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="box">
-                    <h2 class="text-uppercase">Editar pin</h2>
+                    <h2 class="text-uppercase">Editar residuo</h2>
                 </div>
             </div>
             <form method="POST" action="{{ action('PinController@update', ['pin_id' => $pin->id]) }}">
